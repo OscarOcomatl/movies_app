@@ -122,14 +122,14 @@ class _PosterAndTitle extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(movie.title, style: textTheme.headline5, overflow: TextOverflow.ellipsis, maxLines: 2,),
+                Text(movie.title, style: textTheme.headlineMedium, overflow: TextOverflow.ellipsis, maxLines: 2,),
                 // Text(title, style: textTheme.headline5, overflow: TextOverflow.ellipsis, maxLines: 2,),
-                Text(movie.originalTitle, style: textTheme.subtitle1, overflow: TextOverflow.ellipsis, maxLines: 2,),
+                Text(movie.originalTitle, style: textTheme.headlineSmall, overflow: TextOverflow.ellipsis, maxLines: 2,),
                 Row(
                   children: [
                     Icon( Icons.star_border_outlined, size: 15, color: Colors.grey,),
                     SizedBox(width: 5,),
-                    Text(movie.voteAverage.toString(), style: textTheme.caption,)
+                    Text(movie.voteAverage.toString(), style: textTheme.titleMedium,)
                   ],
                 )
               ],
@@ -153,7 +153,7 @@ class _Overview extends StatelessWidget {
     padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
     child: Text(movie.overview,
       textAlign: TextAlign.justify,
-      style: Theme.of(context).textTheme.subtitle1,
+      style: Theme.of(context).textTheme.labelSmall,
     ),
     );
   }
