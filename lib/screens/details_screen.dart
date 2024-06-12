@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:peliculas/models/models.dart';
 import 'package:peliculas/widgets/widgets.dart';
@@ -11,10 +12,10 @@ class DetailsScreen extends StatelessWidget {
     // TODO: cambiar por una instancia de movie
     // final String movie = ModalRoute.of(context)?.settings.arguments.toString() ?? 'no-movie';
     final Movie movie = ModalRoute.of(context)!.settings.arguments as Movie; // Como el argumento es un objeto, se necesita especificar como va a ser tratado, en este caso como una pelicula
-    print(movie.title);
-    print(movie.fullbackDropPath);
-    print(movie.voteAverage);
-    print(movie.overview);
+    // print(movie.title);
+    // print(movie.fullbackDropPath);
+    // print(movie.voteAverage);
+    // print(movie.overview);
     
 
     return Scaffold(
@@ -62,18 +63,27 @@ class _CustomAppBar extends StatelessWidget {
           alignment: Alignment.bottomCenter,
           color: Colors.black12,
           padding: const EdgeInsets.only(bottom: 10, right: 10, left: 10),
-          child: Text(movie.title,
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            fontSize: 16
-          ),
+          child: FadeIn(
+            delay: const Duration(milliseconds: 300),
+            child: Text(
+            movie.title,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 16,
+              color: Colors.white
+            ),
+            ),
           ),
         ),
-        background: FadeInImage(
-          placeholder: const AssetImage('assets/loading.gif'),
-          // image: NetworkImage('https://via.placeholder.com/500x300'),
-          image: NetworkImage(movie.fullbackDropPath),
-          fit: BoxFit.cover,
+        background: Hero(
+          tag: movie.heroIdBanner!,
+          child: FadeInImage(
+            placeholder: const AssetImage('assets/loading.gif'),
+            // image: NetworkImage('https://via.placeholder.com/500x300'),
+            image: NetworkImage(movie.fullbackDropPath),
+            fadeInDuration: const Duration(milliseconds: 150),
+            fit: BoxFit.cover,
+          ),
         ),
       ),
     );
@@ -97,8 +107,8 @@ class _PosterAndTitle extends StatelessWidget {
     final size = MediaQuery.of(context).size;
 
     return Container(
-      margin:EdgeInsets.only(top: 20),
-      padding: EdgeInsets.symmetric(horizontal: 20),
+      margin: const EdgeInsets.only(top: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         children: [
             Hero(
@@ -114,7 +124,7 @@ class _PosterAndTitle extends StatelessWidget {
               ),
             ),
 
-          SizedBox(
+          const SizedBox(
             width: 20,
           ),
           ConstrainedBox(
@@ -122,16 +132,26 @@ class _PosterAndTitle extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(movie.title, style: textTheme.headlineMedium, overflow: TextOverflow.ellipsis, maxLines: 2,),
+
+                FadeIn(
+                  delay: const Duration(milliseconds: 200),
+                  child: Text(movie.title, style: textTheme.headlineMedium, overflow: TextOverflow.ellipsis, maxLines: 2),
+                ),
+                FadeIn(
+                  delay: const Duration(milliseconds: 400),
+                  child: Text(movie.originalTitle, style: textTheme.headlineSmall, overflow: TextOverflow.ellipsis, maxLines: 2),
+                ),
                 // Text(title, style: textTheme.headline5, overflow: TextOverflow.ellipsis, maxLines: 2,),
-                Text(movie.originalTitle, style: textTheme.headlineSmall, overflow: TextOverflow.ellipsis, maxLines: 2,),
-                Row(
-                  children: [
-                    Icon( Icons.star_border_outlined, size: 15, color: Colors.grey,),
-                    SizedBox(width: 5,),
-                    Text(movie.voteAverage.toString(), style: textTheme.titleMedium,)
-                  ],
-                )
+                FadeIn(
+                  delay: const Duration(milliseconds: 600),
+                  child: Row(
+                    children: [
+                      const Icon( Icons.star_border_outlined, size: 15, color: Colors.grey,),
+                      const SizedBox(width: 5,),
+                      Text(movie.voteAverage.toString(), style: textTheme.titleMedium,)
+                    ],
+                  )
+                ),
               ],
             ),
           )

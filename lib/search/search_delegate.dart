@@ -87,7 +87,7 @@ class _MovieItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    movie.heroId = 'search-${movie.id}';
+    // movie.heroId = 'search-${movie.id}';
     return ListTile(
       leading: Hero(
         tag: movie.heroId!,

@@ -71,6 +71,7 @@ class _CastCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      
       margin: EdgeInsets.symmetric(horizontal: 10),
       width: 110,
       height: 100,
@@ -89,12 +90,14 @@ class _CastCard extends StatelessWidget {
             ),
           ),
           SizedBox(height: 5,),
-          Text(
-            actor.name,
-            maxLines: 2,
-            overflow:TextOverflow.ellipsis,
-            textAlign: TextAlign.center,
-
+          Expanded(
+            child: Text(
+              actor.name,
+              maxLines: 2,
+              overflow:TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
+            
+            ),
           )
         ],
       ),

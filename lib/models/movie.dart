@@ -17,7 +17,7 @@ class Movie {
     double voteAverage;
     int voteCount;
 
-    String? heroId; // opcional porque se va a construir en el momento que se esta construyendo ese widget
+    // String? heroId; // opcional porque se va a construir en el momento que se esta construyendo ese widget
 
     get fullPosterImg { // getter mthod
       // return 'https://image.tmdb.org/t/p/w500${this.posterPath}';
@@ -53,6 +53,14 @@ class Movie {
         required this.voteAverage,
         required this.voteCount,
     });
+
+    get heroId{
+      return '$id-tarjeta';
+    }
+
+    get heroIdBanner {
+      return '$id-banner';
+    }
 
     factory Movie.fromJson(String str) => Movie.fromMap(json.decode(str));
 

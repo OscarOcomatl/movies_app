@@ -1,20 +1,19 @@
-import 'package:card_swiper/card_swiper.dart';
+// import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:peliculas/models/models.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class CardSwiper extends StatelessWidget {
   // const CardSwiper({super.key});
 
   final List<Movie> movies;
 
-  const CardSwiper({super.key, required this.movies}); // De esta forma se envian parametros posicionales
-
-  
-  
+  const CardSwiper(
+      {super.key,
+      required this.movies}); // De esta forma se envian parametros posicionales
 
   @override
   Widget build(BuildContext context) {
-
     final size = MediaQuery.of(context).size;
 
     var loading = Container(
@@ -22,10 +21,9 @@ class CardSwiper extends StatelessWidget {
         height: size.height * 0.5,
         child: Center(
           child: CircularProgressIndicator(),
-        )
-    );
+        ));
 
-    if(movies.isEmpty){
+    if (movies.isEmpty) {
       return loading;
     }
 
@@ -39,42 +37,80 @@ class CardSwiper extends StatelessWidget {
     //   );
     // }
 
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10)),
-        // color: Colors.indigo.shade200
-      ),
-      width: double.infinity,
-      height: size.height * 0.5,
-      // color: Colors.red,
-      child: Swiper(
+    return Padding(
+      padding: const EdgeInsets.only(top: 10,bottom: 10),
+      child: CarouselSlider.builder(
         itemCount: movies.length,
-        layout: SwiperLayout.STACK,
-        itemWidth: size.width * 0.6,
-        itemHeight: size.height * 0.45,
-        itemBuilder: ( _, int index ) {
+        itemBuilder: (context, index, realIndex) => MoviePosterImage(movie: movies[index]),
+        options: CarouselOptions(
+          autoPlay: true, 
+          aspectRatio: 2.0, 
+          enlargeCenterPage: true
+        )
+      ),
+    );
 
-          final movie = movies[index];
-          movie.heroId = 'swiper-${movie.id}';
-          // print(movie.fullPosterImg);
+    // return Container(
+    //   decoration: BoxDecoration(
+    //     borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10)),
+    //     // color: Colors.indigo.shade200
+    //   ),
+    //   width: double.infinity,
+    //   height: size.height * 0.5,
+    //   // color: Colors.red,
+    //   child: Swiper(
+    //     itemCount: movies.length,
+    //     layout: SwiperLayout.STACK,
+    //     itemWidth: size.width * 0.6,
+    //     itemHeight: size.height * 0.45,
+    //     itemBuilder: ( _, int index ) {
 
-          return GestureDetector(
-            // onTap: () => Navigator.pushNamed(context, 'details', arguments: 'movie-instance'),
-            onTap: () => Navigator.pushNamed(context, 'details', arguments: movie),
-            child: Hero(
-              tag: movie.heroId!, // el tag puede ser cualquier cosa pero tiene que ser unico, se le pone el signo porque esta declarado como opcional pero con el signo se le dice a dart que siempre tendra un valor
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: FadeInImage( // animacion para mostrar la imagen
-                  placeholder:AssetImage('assets/no-image.jpg'),
-                  // image: NetworkImage('https://via.placeholder.com/300x400'),
-                  image: NetworkImage(movie.fullPosterImg),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-          );
-        }, // item builder es una funcion que se va a disparar para construir un nuevo widget
+    //       final movie = movies[index];
+    //       movie.heroId = 'swiper-${movie.id}';
+    //       // print(movie.fullPosterImg);
+
+    //       return GestureDetector(
+    //         // onTap: () => Navigator.pushNamed(context, 'details', arguments: 'movie-instance'),
+    //         onTap: () => Navigator.pushNamed(context, 'details', arguments: movie),
+    //         child: Hero(
+    //           tag: movie.heroId!, // el tag puede ser cualquier cosa pero tiene que ser unico, se le pone el signo porque esta declarado como opcional pero con el signo se le dice a dart que siempre tendra un valor
+    //           child: ClipRRect(
+    //             borderRadius: BorderRadius.circular(20),
+    //             child: FadeInImage( // animacion para mostrar la imagen
+    //               placeholder:AssetImage('assets/no-image.jpg'),
+    //               // image: NetworkImage('https://via.placeholder.com/300x400'),
+    //               image: NetworkImage(movie.fullPosterImg),
+    //               fit: BoxFit.cover,
+    //             ),
+    //           ),
+    //         ),
+    //       );
+    //     }, // item builder es una funcion que se va a disparar para construir un nuevo widget
+    //   ),
+    // );
+  }
+}
+
+class MoviePosterImage extends StatelessWidget {
+  const MoviePosterImage({super.key, required this.movie});
+
+  final Movie movie;
+
+  @override
+  Widget build(BuildContext context) {
+    // movie.heroId = '${movie.id}-banner';
+
+    return GestureDetector(
+      onTap: () => Navigator.pushNamed(context, 'details', arguments: movie),
+      child: Hero(
+        tag: movie.heroIdBanner,
+        child: FadeInImage(
+          // animacion para mostrar la imagen
+          placeholder: const AssetImage('assets/loading.gif'),
+          // image: NetworkImage('https://via.placeholder.com/300x400'),
+          image: NetworkImage(movie.fullbackDropPath),
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }

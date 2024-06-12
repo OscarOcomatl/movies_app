@@ -43,7 +43,7 @@ class _MovieSliderState extends State<MovieSlider> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 260,
+      height: 280,
       // color: Colors.red,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -89,11 +89,11 @@ class _MoviePoster extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    movie.heroId =  heroId;
+    // movie.heroId =  heroId;
     // print('title: ${movie.title}, original title: ${movie.originalTitle}');
     return Container(
       width: 130,
-      height: 190,
+      height: 200,
       // color: Colors.green,
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
